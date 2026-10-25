@@ -1,11 +1,68 @@
 # Assignment 3: Testing
 
-No assignment features have been implemented or tested yet.
+## Mission 2 and 3 verification
+
+| Check | Expected result | Actual result | Status |
+|---|---|---|---|
+| Server profile | Employee 1 name, email, and company come from JSONPlaceholder. | Direct browser load showed Leanne Graham, Sincere@april.biz, and Romaguera-Crona. | Pass |
+| Profile independence | Profile failure shows a profile-specific message while other sections remain available. | Implemented; failure was not simulated. | Not tested |
+| Server preview | At most three post titles for employee 1 appear after the preview loads. | Direct browser load showed three JSONPlaceholder post titles. | Pass |
+| Focused Suspense | Preview fallback appears during the artificial delay while the title and profile remain available. | Reloaded with `domcontentloaded`; the dashboard title and loaded profile were visible alongside “Loading recent posts…”. | Pass |
+| Artificial delay | Preview waits two seconds at request time. | The preview work uses `connection()` followed by a two-second delay. The fallback was observed during that wait. | Pass |
+| Lint | `npm run lint` completes successfully. | Passed. | Pass |
+| Production build | `npm run build` completes successfully. | Passed; Next.js generated the route as partially prerendered with dynamic server-streamed content. | Pass |
+
+## Mission 4 verification
+
+| Check | Expected result | Actual result | Status |
+|---|---|---|---|
+| Client idle | No client posts request before the first click. | Browser verification observed zero matching requests before clicking. | Pass |
+| Client loading | Loading feedback appears and duplicate requests are prevented. | Loading feedback and a disabled button were visible while the request was pending. | Pass |
+| Client success | Post titles and bodies render after a successful request. | One matching request occurred after clicking; ten posts with titles and bodies rendered. | Pass |
+| Client empty | Empty array shows “No posts found” separately from an error. | The Empty scenario showed “No posts found.” and no client-section error message. | Pass |
+| Client error/retry | Failure shows a friendly message and a retry action. | Mission 5 HTTP error scenario verified below. | Pass |
+
+## Mission 5 verification
+
+| Check | Expected result | Actual result | Status |
+|---|---|---|---|
+| API error class | HTTP failure throws `ApiError` with status and goes through the common response check. | Selecting HTTP error displayed the custom HTTP 503 message, distinguishing it from a network failure. | Pass |
+| Success scenario | Real API request returns posts. | Verified in Mission 4; ten posts rendered from the real endpoint. | Pass |
+| Slow scenario | Wait two seconds, then request real API; loading feedback remains visible. | Loading feedback and disabled button were visible; ten real posts rendered after about 3.6 seconds total. | Pass |
+| HTTP error scenario | A simulated 503 `Response` reaches the shared `response.ok` check and shows an HTTP-specific message. | Simulated response showed “The posts service returned HTTP 503”; profile and server preview stayed visible. | Pass |
+| Empty scenario | A simulated successful empty JSON `Response` reaches the shared parser and shows “No posts found.” | Empty state appeared in the client section without an error message. | Pass |
+| Recovery | Switch to Success and retry; posts appear and the error clears. | After the HTTP 503, switching to Success and retrying loaded posts and cleared the client error. | Pass |
+| Keyboard focus | Scenario selector and action button are keyboard reachable with visible focus. | At 360px, Tab moved from the scenario selector to the Load posts button; its computed outline was solid and 1.6px wide. | Pass |
+| 360px usability | Content remains readable without horizontal overflow. | At a 360px browser viewport, document and body widths were 345px (the remaining 15px is the browser scrollbar); the furthest main-content element ended at 328.8px. No horizontal overflow; the page is vertically scrollable. | Pass |
+
+## Screenshots
+
+The following screenshots were captured from the running app. Loading was captured immediately after navigation commit, while the Suspense fallback was visible.
+
+### Normal state
+
+![Normal dashboard state](./screenshots/normal.png)
+
+### Server preview loading
+
+![Server preview Suspense fallback](./screenshots/server-preview-loading.png)
+
+### Client error
+
+![Client HTTP error state with retry](./screenshots/client-error.png)
+
+### Empty state
+
+![Client empty state](./screenshots/empty-state.png)
+
+### 360px mobile layout and keyboard focus
+
+![Employee Explorer at 360px wide](./screenshots/mobile-360.png)
 
 ## Initial inspection
 
 - Branch: `assignment-3-maya-interview`.
-- The project contains the Next.js App Router starter page and layout.
+- The project uses the Next.js App Router.
 - Available scripts: `dev`, `build`, `start`, and `lint`.
 
 ## Dependency audit

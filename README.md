@@ -1,36 +1,43 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Employee Explorer — Assignment 3
 
-## Getting Started
+**Student:** Mohamad Sayed Ahmad
+**Framework:** Next.js 16.4.2 (App Router)
 
-First, run the development server:
+Employee Explorer is a one-page dashboard demonstrating server-side data fetching, focused Suspense streaming, client-side requests, and API failure handling.
+
+## Run locally
+
+Requirements: Node.js and npm.
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Dashboard
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- The server-rendered profile fetches user/employee ID 1 from `https://jsonplaceholder.typicode.com/users/1` and shows the name, email, and company.
+- The server-rendered recent-post preview fetches posts for ID 1 and displays up to three titles inside its own Suspense boundary.
+- The preview includes an intentional two-second request-time delay to demonstrate the Suspense fallback. This is a learning simulation, not API latency.
+- **Explore all posts** does not make a browser request until **Load posts** is clicked. The **Demo scenario** selector applies to the next load or retry:
+  - **Success:** requests real posts from JSONPlaceholder.
+  - **Slow:** waits two seconds, then requests real posts.
+  - **HTTP error:** creates a local simulated HTTP 503 response.
+  - **Empty:** creates a local successful JSON response containing an empty array.
 
-## Learn More
+The HTTP error and empty responses are simulations, not responses returned by JSONPlaceholder. The app requires a network connection for the profile and real-post requests. Profile-specific error UI is implemented, but a profile API failure has not been simulated in testing.
 
-To learn more about Next.js, take a look at the following resources:
+## Validate
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+npm run lint
+npm run build
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Assignment notes and evidence
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- [Interview explanations](./docs/INTERVIEW.md)
+- [Testing results and screenshots](./docs/TESTING.md)
+- [Screenshots](./docs/screenshots/)
