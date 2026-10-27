@@ -13,7 +13,7 @@ export default function Home() {
             Employee Explorer
           </h1>
           <p className="max-w-2xl text-base leading-7 text-zinc-600 dark:text-zinc-300">
-            Yehia&apos;s employee profile and recent posts, fetched independently
+            Yehia's employee profile and recent posts, fetched independently
             on the server.
           </p>
         </header>
